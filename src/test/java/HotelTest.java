@@ -18,9 +18,10 @@ public class HotelTest {
     private Guest guest3;
     private Guest guest4;
     private Guest guest5;
+    private Booking booking;
 
     @Before
-    public void before(){
+    public void before() {
         hotel = new Hotel("Grand Java Paradise Hotel");
         bedroom = new Bedroom(1, 2, "double");
         bedroom2 = new Bedroom(2, 1, "single");
@@ -32,23 +33,24 @@ public class HotelTest {
         guest3 = new Guest("Alba");
         guest4 = new Guest("Don Quijote");
         guest5 = new Guest("Antonio");
+        booking = new Booking(7, bedroom, 100);
 
     }
 
     @Test
-    public void canAddBedroom(){
+    public void canAddBedroom() {
         hotel.addBedroom(bedroom);
         assertEquals(1, hotel.bedroomCount());
     }
 
     @Test
-    public void canAddConferenceRoom(){
+    public void canAddConferenceRoom() {
         hotel.addConferenceRoom(conferenceRoom);
         assertEquals(1, hotel.conferenceRoomCount());
     }
 
     @Test
-    public void canCheckInGuestToBedroom(){
+    public void canCheckInGuestToBedroom() {
         hotel.addBedroom(bedroom);
         hotel.addGuest(guest, bedroom);
         hotel.addGuest(guest2, bedroom);
@@ -57,11 +59,21 @@ public class HotelTest {
     }
 
     @Test
-    public void canCheckOutGuestFromBedroom(){
+    public void canCheckOutGuestFromBedroom() {
         hotel.addBedroom(bedroom);
         hotel.addGuest(guest, bedroom);
         hotel.checkOutGuest(guest, bedroom);
         assertEquals(0, bedroom.guestCount());
     }
 
+    @Test
+    public void canBookRoom() {
+        Booking newBooking = hotel.bookRoom(7, bedroom, 100);
+        assertEquals(7, newBooking.getNumberOfNights());
+        assertEquals(bedroom, newBooking.getBedroom());
+        assertEquals(100, newBooking.getPrice());
+
+
+    }
 }
+
